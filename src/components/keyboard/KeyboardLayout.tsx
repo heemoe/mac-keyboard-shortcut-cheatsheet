@@ -73,7 +73,7 @@ const keyboardLayout = {
 };
 
 interface KeyboardLayoutProps {
-    onKeyHover?: (key: string, event: React.MouseEvent<Element>) => void;
+    onKeyHover?: (key: string | null, event: React.MouseEvent<Element>) => void;
     onKeyClick?: (key: string) => void;
     highlightedKeys?: string[];
     activeShortcut?: Shortcut | null;
@@ -97,7 +97,7 @@ export const KeyboardLayout: React.FC<KeyboardLayoutProps> = ({
     }, [activeShortcut]);
 
     const handleKeyHover = (
-        key: string,
+        key: string | null,
         event: React.MouseEvent<HTMLDivElement>
     ) => {
         setActiveKey(key);
@@ -136,6 +136,7 @@ export const KeyboardLayout: React.FC<KeyboardLayoutProps> = ({
                         isActive={isActive}
                         isPartOfCombination={isInCombination}
                         onHover={(event) => handleKeyHover(key, event)}
+                        onLeave={(event) => handleKeyHover(null, event)}
                         onClick={() => handleKeyClick(key)}
                     />
                 );

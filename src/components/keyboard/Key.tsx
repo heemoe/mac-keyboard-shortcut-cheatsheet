@@ -10,6 +10,7 @@ interface KeyProps {
     isPartOfCombination?: boolean;
     onClick?: () => void;
     onHover?: (event: React.MouseEvent<HTMLDivElement>) => void;
+    onLeave?: (event: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 export const Key: React.FC<KeyProps> = ({
@@ -21,6 +22,7 @@ export const Key: React.FC<KeyProps> = ({
     isPartOfCombination = false,
     onClick,
     onHover,
+    onLeave,
 }) => {
     const keyRef = useRef<HTMLDivElement>(null);
 
@@ -54,6 +56,7 @@ export const Key: React.FC<KeyProps> = ({
             whileTap={{ scale: 0.95 }}
             onClick={onClick}
             onMouseEnter={(e) => onHover?.(e)}
+            onMouseLeave={(e) => onLeave?.(e)}
         >
             <span className="text-sm text-black dark:text-white font-medium">
                 {label}
