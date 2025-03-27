@@ -68,8 +68,8 @@ const keyboardLayout = {
         "'",
         "Enter",
     ],
-    row5: ["Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "Shift"],
-    row6: ["Ctrl", "Opt", "Cmd", "Space", "Cmd", "Opt", "←", "↓", "→"],
+    row5: ["Shift", "Z", "X", "C", "V", "B", "N", "M", ",", ".", "/", "↑"],
+    row6: ["Fn", "Ctrl", "Opt", "Cmd", "Space", "←", "↓", "→"],
 };
 
 interface KeyboardLayoutProps {
@@ -117,10 +117,10 @@ export const KeyboardLayout: React.FC<KeyboardLayoutProps> = ({
     };
 
     const renderRow = (keys: string[], rowIndex: number) => (
-        <div className="flex gap-1 justify-center" key={`row-${rowIndex}`}>
+        <div className="flex gap-2 justify-center" key={`row-${rowIndex}`}>
             {keys.map((key, index) => {
-                let width = "w-14";
-                if (key === "Space") width = "w-64";
+                let width = "w-14 my-1";
+                if (key === "Space") width = "flex-1 mx-2";
                 else if (["Shift", "Enter", "Caps", "Tab"].includes(key))
                     width = "w-20";
                 else if (key === "Bksp") width = "w-20";
