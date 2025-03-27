@@ -44,7 +44,7 @@ export const Tooltip: React.FC<TooltipProps> = ({
                                     {shortcut.combination.map(
                                         (key, keyIndex) => (
                                             <React.Fragment key={keyIndex}>
-                                                <span className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded text-sm font-medium">
+                                                <span className="bg-gray-100 dark:bg-gray-700 text-black dark:text-white px-2 py-1 rounded text-sm font-medium">
                                                     {key}
                                                 </span>
                                                 {keyIndex <
