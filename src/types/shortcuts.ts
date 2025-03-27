@@ -6,9 +6,9 @@ export interface Shortcut {
     osVersion?: string[];
 }
 
+// Define all available shortcut categories
 export type ShortcutCategory =
     | "System"
-    | "Navigation"
     | "Text Editing"
     | "Window Management"
     | "Screenshots"

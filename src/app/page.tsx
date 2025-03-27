@@ -16,7 +16,6 @@ import type {
 
 const categories: ShortcutCategory[] = [
     "System",
-    "Navigation",
     "Text Editing",
     "Window Management",
     "Screenshots",
@@ -35,7 +34,7 @@ export default function Home() {
         y: 0,
     });
     const [selectedCategory, setSelectedCategory] =
-        useState<ShortcutCategory | null>(null);
+        useState<ShortcutCategory>("Text Editing");
     // const [searchResults, setSearchResults] = useState<Shortcut[]>([]);
     const [highlightedKeys, setHighlightedKeys] = useState<string[]>([]);
 
@@ -63,11 +62,9 @@ export default function Home() {
 
     const handleKeyHover = (key: string, event: React.MouseEvent<Element>) => {
         const keyShortcuts = getShortcutsByKey(key);
-        const filteredShortcuts = selectedCategory
-            ? keyShortcuts.filter(
-                  (shortcut) => shortcut.category === selectedCategory
-              )
-            : keyShortcuts;
+        const filteredShortcuts = keyShortcuts.filter(
+            (shortcut) => shortcut.category === selectedCategory
+        );
 
         if (filteredShortcuts.length > 0) {
             const rect = event.currentTarget.getBoundingClientRect();
@@ -98,8 +95,10 @@ export default function Home() {
     // };
 
     const handleCategoryChange = (newCategories: ShortcutCategory[]) => {
-        // For single selection, take the first item or null
-        setSelectedCategory(newCategories.length > 0 ? newCategories[0] : null);
+        // For single selection, take the first item or revert to "Text Editing"
+        setSelectedCategory(
+            newCategories.length > 0 ? newCategories[0] : "Text Editing"
+        );
         setTooltipVisible(false);
         setActiveShortcut(null);
     };
@@ -122,7 +121,7 @@ export default function Home() {
                 <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
             </div>
             <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-8">
-                Mac Keyboard Shortcuts
+                Mac Keyboard Shortcuts Cheat Sheet
             </h1>
             <div className="w-full max-w-4xl space-y-6">
                 <div className="flex flex-col gap-4">
