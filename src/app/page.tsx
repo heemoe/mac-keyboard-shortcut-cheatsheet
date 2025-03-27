@@ -35,36 +35,15 @@ export default function Home() {
     });
     const [selectedCategory, setSelectedCategory] =
         useState<ShortcutCategory>("Text Editing");
-    // const [searchResults, setSearchResults] = useState<Shortcut[]>([]);
     const [highlightedKeys, setHighlightedKeys] = useState<string[]>([]);
-
-    // useEffect(() => {
-    //     // Update highlighted keys when search results change
-    //     const keys = new Set(
-    //         searchResults.flatMap((shortcut) => shortcut.combination)
-    //     );
-    //     setHighlightedKeys(Array.from(keys));
-    // }, [searchResults]);
-
-    // Effect to update highlighted keys when activeShortcut changes
-    // useEffect(() => {
-    //     if (activeShortcut) {
-    //         setHighlightedKeys(activeShortcut.combination);
-    //     } else if (searchResults.length > 0) {
-    //         const keys = new Set(
-    //             searchResults.flatMap((shortcut) => shortcut.combination)
-    //         );
-    //         setHighlightedKeys(Array.from(keys));
-    //     } else {
-    //         setHighlightedKeys([]);
-    //     }
-    // }, [activeShortcut, searchResults]);
 
     const handleKeyHover = (key: string, event: React.MouseEvent<Element>) => {
         const keyShortcuts = getShortcutsByKey(key);
-        const filteredShortcuts = keyShortcuts.filter(
-            (shortcut) => shortcut.category === selectedCategory
-        );
+        const filteredShortcuts = selectedCategory
+            ? keyShortcuts.filter(
+                  (shortcut) => shortcut.category === selectedCategory
+              )
+            : keyShortcuts;
 
         if (filteredShortcuts.length > 0) {
             const rect = event.currentTarget.getBoundingClientRect();
@@ -88,14 +67,8 @@ export default function Home() {
         }
     };
 
-    // const handleSearchResults = (results: Shortcut[]) => {
-    //     // setSearchResults(results);
-    //     // Clear active shortcut when searching
-    //     setActiveShortcut(null);
-    // };
-
     const handleCategoryChange = (newCategories: ShortcutCategory[]) => {
-        // For single selection, take the first item or revert to "Text Editing"
+        // For single selection, take the first item or keep the default
         setSelectedCategory(
             newCategories.length > 0 ? newCategories[0] : "Text Editing"
         );
@@ -105,15 +78,13 @@ export default function Home() {
 
     const handleShortcutHover = (shortcut: Shortcut) => {
         setActiveShortcut(shortcut);
+        setHighlightedKeys(shortcut.combination);
     };
 
     const handleShortcutLeave = () => {
         setActiveShortcut(null);
+        setHighlightedKeys([]);
     };
-
-    // Get all shortcuts, filtered by search if applicable
-    // const filteredShortcuts =
-    //     searchResults.length > 0 ? searchResults : shortcuts;
 
     return (
         <main className="min-h-screen bg-gray-100 dark:bg-gray-950 flex flex-col items-center justify-center p-4">
@@ -121,16 +92,13 @@ export default function Home() {
                 <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
             </div>
             <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-8">
-                Mac Keyboard Shortcuts Cheat Sheet
+                Mac Keyboard Shortcuts
             </h1>
             <div className="w-full max-w-4xl space-y-6">
                 <div className="flex flex-col gap-4">
-                    {/* <SearchBar onSearchResults={handleSearchResults} /> */}
                     <CategoryFilter
                         categories={categories}
-                        selectedCategories={
-                            selectedCategory ? [selectedCategory] : []
-                        }
+                        selectedCategories={[selectedCategory]}
                         onCategoryChange={handleCategoryChange}
                     />
                     <ShortcutList

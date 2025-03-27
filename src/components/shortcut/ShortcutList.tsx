@@ -4,7 +4,7 @@ import { Shortcut, ShortcutCategory } from "../../types/shortcuts";
 
 interface ShortcutListProps {
     shortcuts: Shortcut[];
-    selectedCategory: ShortcutCategory;
+    selectedCategory: ShortcutCategory | null;
     onShortcutHover: (shortcut: Shortcut) => void;
     onShortcutLeave: () => void;
     activeShortcut: Shortcut | null;
@@ -18,20 +18,22 @@ const ShortcutList: React.FC<ShortcutListProps> = ({
     activeShortcut,
 }) => {
     // Filter shortcuts by the selected category
-    const filteredShortcuts = shortcuts.filter(
-        (shortcut) => shortcut.category === selectedCategory
-    );
+    const filteredShortcuts = selectedCategory
+        ? shortcuts.filter((shortcut) => shortcut.category === selectedCategory)
+        : shortcuts;
 
     // Format the shortcut combination with "+" between keys
     const formatCombination = (combination: string[]): string => {
         return combination.join(" + ");
     };
 
-    // If no shortcuts to display
-    if (filteredShortcuts.length === 0) {
+    // If no category is selected or no shortcuts to display
+    if (!selectedCategory || filteredShortcuts.length === 0) {
         return (
             <div className="text-center py-4 text-gray-500 dark:text-gray-400">
-                No shortcuts found for this category
+                {!selectedCategory
+                    ? "Select a category to view shortcuts"
+                    : "No shortcuts found for this category"}
             </div>
         );
     }
