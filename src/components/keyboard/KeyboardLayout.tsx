@@ -19,7 +19,7 @@ const keyboardLayout = {
         "F10",
         "F11",
         "F12",
-        "Del",
+        "Delete",
     ],
     row2: [
         "`",
@@ -107,6 +107,7 @@ export const KeyboardLayout: React.FC<KeyboardLayoutProps> = ({
     const handleKeyClick = (key: string) => {
         onKeyClick?.(key);
     };
+    console.log("highlightedKeys", highlightedKeys);
 
     const isKeyHighlighted = (key: string) => {
         return highlightedKeys.includes(key);
@@ -119,7 +120,7 @@ export const KeyboardLayout: React.FC<KeyboardLayoutProps> = ({
     const renderRow = (keys: string[], rowIndex: number) => (
         <div className="flex gap-2 justify-center" key={`row-${rowIndex}`}>
             {keys.map((key, index) => {
-                let width = "w-14 my-1";
+                let width = "w-14";
                 if (key === "Space") width = "flex-1 mx-2";
                 else if (["Shift", "Enter", "Caps", "Tab"].includes(key))
                     width = "w-20";

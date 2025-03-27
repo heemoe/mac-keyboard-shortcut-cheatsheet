@@ -108,8 +108,8 @@ export default function Home() {
             <div className="absolute top-4 right-4">
                 <ThemeToggle isDark={isDark} onToggle={toggleTheme} />
             </div>
-            <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100 mb-8">
-                Mac Keyboard Shortcuts
+            <h1 className="text-3xl font-bold text-gray-800 dark:text-gray-100 mb-8">
+                Mac Keyboard Shortcuts Cheat Sheet
             </h1>
             <div className="w-full max-w-4xl space-y-6">
                 <div className="flex flex-col gap-4">

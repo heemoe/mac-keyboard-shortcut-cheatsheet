@@ -45,7 +45,7 @@ export const Key: React.FC<KeyProps> = ({
                 bg-white dark:bg-gray-800
                 ${getHighlightClass()}
                 rounded-lg shadow-md
-                flex items-center justify-center
+                flex items-center justify-center mb-1
                 cursor-pointer
                 transition-all duration-200
                 hover:bg-gray-100 dark:hover:bg-gray-700
