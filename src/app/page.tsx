@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CategoryFilter from "../components/filter/CategoryFilter";
 import KeyboardLayout from "../components/keyboard/KeyboardLayout";
 import Tooltip from "../components/keyboard/Tooltip";
@@ -37,7 +37,24 @@ export default function Home() {
         useState<ShortcutCategory>("Text Editing");
     const [highlightedKeys, setHighlightedKeys] = useState<string[]>([]);
 
-    const handleKeyHover = (key: string, event: React.MouseEvent<Element>) => {
+    // Update highlighted keys when activeShortcut changes
+    useEffect(() => {
+        if (activeShortcut) {
+            setHighlightedKeys(activeShortcut.combination);
+        } else {
+            setHighlightedKeys([]);
+        }
+    }, [activeShortcut]);
+
+    const handleKeyHover = (
+        key: string | null,
+        event: React.MouseEvent<Element>
+    ) => {
+        if (!key) {
+            setTooltipVisible(false);
+            return;
+        }
+
         const keyShortcuts = getShortcutsByKey(key);
         const filteredShortcuts = selectedCategory
             ? keyShortcuts.filter(
@@ -60,7 +77,9 @@ export default function Home() {
         }
     };
 
-    const handleKeyClick = (key: string) => {
+    const handleKeyClick = (key: string | null) => {
+        if (!key) return;
+
         const keyShortcuts = getShortcutsByKey(key);
         if (keyShortcuts.length > 0) {
             setActiveShortcut(keyShortcuts[0]);
@@ -68,7 +87,7 @@ export default function Home() {
     };
 
     const handleCategoryChange = (newCategories: ShortcutCategory[]) => {
-        // For single selection, take the first item or keep the default
+        // For single selection, take the first item or null
         setSelectedCategory(
             newCategories.length > 0 ? newCategories[0] : "Text Editing"
         );
@@ -78,12 +97,10 @@ export default function Home() {
 
     const handleShortcutHover = (shortcut: Shortcut) => {
         setActiveShortcut(shortcut);
-        setHighlightedKeys(shortcut.combination);
     };
 
     const handleShortcutLeave = () => {
         setActiveShortcut(null);
-        setHighlightedKeys([]);
     };
 
     return (
