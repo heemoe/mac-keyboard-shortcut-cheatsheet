@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import CategoryFilter from "../components/filter/CategoryFilter";
 import KeyboardLayout from "../components/keyboard/KeyboardLayout";
 import Tooltip from "../components/keyboard/Tooltip";
-import SearchBar from "../components/search/SearchBar";
 import ShortcutList from "../components/shortcut/ShortcutList";
 import ThemeToggle from "../components/theme/ThemeToggle";
 import { useTheme } from "../contexts/ThemeContext";
@@ -37,30 +36,30 @@ export default function Home() {
     });
     const [selectedCategory, setSelectedCategory] =
         useState<ShortcutCategory | null>(null);
-    const [searchResults, setSearchResults] = useState<Shortcut[]>([]);
+    // const [searchResults, setSearchResults] = useState<Shortcut[]>([]);
     const [highlightedKeys, setHighlightedKeys] = useState<string[]>([]);
 
-    useEffect(() => {
-        // Update highlighted keys when search results change
-        const keys = new Set(
-            searchResults.flatMap((shortcut) => shortcut.combination)
-        );
-        setHighlightedKeys(Array.from(keys));
-    }, [searchResults]);
+    // useEffect(() => {
+    //     // Update highlighted keys when search results change
+    //     const keys = new Set(
+    //         searchResults.flatMap((shortcut) => shortcut.combination)
+    //     );
+    //     setHighlightedKeys(Array.from(keys));
+    // }, [searchResults]);
 
     // Effect to update highlighted keys when activeShortcut changes
-    useEffect(() => {
-        if (activeShortcut) {
-            setHighlightedKeys(activeShortcut.combination);
-        } else if (searchResults.length > 0) {
-            const keys = new Set(
-                searchResults.flatMap((shortcut) => shortcut.combination)
-            );
-            setHighlightedKeys(Array.from(keys));
-        } else {
-            setHighlightedKeys([]);
-        }
-    }, [activeShortcut, searchResults]);
+    // useEffect(() => {
+    //     if (activeShortcut) {
+    //         setHighlightedKeys(activeShortcut.combination);
+    //     } else if (searchResults.length > 0) {
+    //         const keys = new Set(
+    //             searchResults.flatMap((shortcut) => shortcut.combination)
+    //         );
+    //         setHighlightedKeys(Array.from(keys));
+    //     } else {
+    //         setHighlightedKeys([]);
+    //     }
+    // }, [activeShortcut, searchResults]);
 
     const handleKeyHover = (key: string, event: React.MouseEvent<Element>) => {
         const keyShortcuts = getShortcutsByKey(key);
@@ -92,11 +91,11 @@ export default function Home() {
         }
     };
 
-    const handleSearchResults = (results: Shortcut[]) => {
-        setSearchResults(results);
-        // Clear active shortcut when searching
-        setActiveShortcut(null);
-    };
+    // const handleSearchResults = (results: Shortcut[]) => {
+    //     // setSearchResults(results);
+    //     // Clear active shortcut when searching
+    //     setActiveShortcut(null);
+    // };
 
     const handleCategoryChange = (newCategories: ShortcutCategory[]) => {
         // For single selection, take the first item or null
@@ -114,8 +113,8 @@ export default function Home() {
     };
 
     // Get all shortcuts, filtered by search if applicable
-    const filteredShortcuts =
-        searchResults.length > 0 ? searchResults : shortcuts;
+    // const filteredShortcuts =
+    //     searchResults.length > 0 ? searchResults : shortcuts;
 
     return (
         <main className="min-h-screen bg-gray-100 dark:bg-gray-950 flex flex-col items-center justify-center p-4">
@@ -127,7 +126,7 @@ export default function Home() {
             </h1>
             <div className="w-full max-w-4xl space-y-6">
                 <div className="flex flex-col gap-4">
-                    <SearchBar onSearchResults={handleSearchResults} />
+                    {/* <SearchBar onSearchResults={handleSearchResults} /> */}
                     <CategoryFilter
                         categories={categories}
                         selectedCategories={
@@ -136,7 +135,7 @@ export default function Home() {
                         onCategoryChange={handleCategoryChange}
                     />
                     <ShortcutList
-                        shortcuts={filteredShortcuts}
+                        shortcuts={shortcuts}
                         selectedCategory={selectedCategory}
                         onShortcutHover={handleShortcutHover}
                         onShortcutLeave={handleShortcutLeave}

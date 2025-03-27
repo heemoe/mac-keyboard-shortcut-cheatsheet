@@ -48,33 +48,33 @@ const ShortcutList: React.FC<ShortcutListProps> = ({
             <h2 className="text-lg font-semibold mb-3 text-gray-800 dark:text-gray-200">
                 {selectedCategory} Shortcuts
             </h2>
-            <ul className="space-y-2">
+            <div className="flex flex-wrap gap-2">
                 {filteredShortcuts.map((shortcut) => (
-                    <motion.li
+                    <motion.div
                         key={shortcut.id}
-                        whileHover={{ scale: 1.01 }}
+                        whileHover={{ scale: 1.05 }}
                         onMouseEnter={() => onShortcutHover(shortcut)}
                         onMouseLeave={onShortcutLeave}
                         className={`
-              p-2 rounded cursor-pointer transition-colors
-              ${
-                  activeShortcut?.id === shortcut.id
-                      ? "bg-blue-50 dark:bg-blue-900"
-                      : "hover:bg-gray-100 dark:hover:bg-gray-700"
-              }
-            `}
+                            flex items-center gap-2 px-3 py-2 rounded-lg
+                            border border-gray-200 dark:border-gray-700
+                            cursor-pointer transition-all
+                            ${
+                                activeShortcut?.id === shortcut.id
+                                    ? "bg-blue-50 dark:bg-blue-900 border-blue-300 dark:border-blue-700"
+                                    : "hover:bg-gray-100 dark:hover:bg-gray-700"
+                            }
+                        `}
                     >
-                        <div className="flex justify-between items-center">
-                            <span className="font-mono text-blue-600 dark:text-blue-400">
-                                {formatCombination(shortcut.combination)}
-                            </span>
-                            <span className="text-gray-700 dark:text-gray-300">
-                                {shortcut.description}
-                            </span>
-                        </div>
-                    </motion.li>
+                        <span className="font-mono text-sm font-medium text-blue-600 dark:text-blue-400 whitespace-nowrap">
+                            {formatCombination(shortcut.combination)}
+                        </span>
+                        <span className="text-sm text-gray-700 dark:text-gray-300">
+                            {shortcut.description}
+                        </span>
+                    </motion.div>
                 ))}
-            </ul>
+            </div>
         </motion.div>
     );
 };
